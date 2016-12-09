@@ -12,30 +12,35 @@ public class IpV4AddressTest {
         IpV4Address add0 = null;
         IpV4Address add1 = new IpV4Address("ad.re.tf.ass");
         assertEquals (Main.substraction(add0, add1), 0l);
+        assertEquals(Main.printAddresses(add0, add1), 0);
     }
 
     @Test
     public void testSubstraction1() throws Exception{
         IpV4Address add0 = new IpV4Address("ad.re.tf.ass");
-        IpV4Address add1 = new IpV4Address("256.300.400.-2");
-        assertEquals(Main.substraction(add0, add1), 255255255002l);
+        IpV4Address add1 = new IpV4Address("0.0.20.-2");
+        assertEquals(Main.substraction(add0, add1), -20002l);
+        assertEquals(Main.printAddresses(add0, add1), 4866);
     }
     @Test
     public void testSubstraction2() throws Exception{
-        IpV4Address add0 = new IpV4Address("256.300.400.-2");
+        IpV4Address add0 = new IpV4Address("0.0.20.-2");
         IpV4Address add1 = new IpV4Address(null);
-        assertEquals(Main.substraction(add0, add1), 255255255002l);
+        assertEquals(Main.substraction(add0, add1), 20002l);
+        assertEquals(Main.printAddresses(add0, add1), 4866);
     }
     @Test
     public void testSubstraction3() throws Exception{
         IpV4Address add0 = new IpV4Address(null);
-        IpV4Address add1 = new IpV4Address("192.156.100.5");
-        assertEquals(Main.substraction(add0, add1), 192156100005l);
+        IpV4Address add1 = new IpV4Address("ad.re.tf.ass");
+        assertEquals(Main.substraction(add0, add1), 0l);
+        assertEquals(Main.printAddresses(add0, add1), 0);
     }
     @Test
     public void testSubstraction4() throws Exception{
-        IpV4Address add0 = new IpV4Address("192.156.100.5");
+        IpV4Address add0 = new IpV4Address("0.0.-20.-2");
         IpV4Address add1 = new IpV4Address("ad1.20e.t5f.a99");
-        assertEquals(Main.substraction(add0, add1), 192156100005l);
+        assertEquals(Main.substraction(add0, add1), 20002l);
+        assertEquals(Main.printAddresses(add0, add1), 4866);
     }
 }
