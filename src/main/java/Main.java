@@ -119,11 +119,6 @@ public class Main {
         add0.printAll();
         IpV4Address add1 = new IpV4Address(address1);
         add1.printAll();
-        //long a = substraction(add0, add1);
-        System.out.println(substraction(add0, add1));
-        /*for (int i = 0; i < a; i++) {
-
-        }*/
         printAddresses(add0, add1);
     }
 }
