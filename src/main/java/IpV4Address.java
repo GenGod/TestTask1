@@ -11,54 +11,59 @@ public class IpV4Address {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             for (String ad : address.split("[.]")) {
-                switch (ad.length()) {
-                    case 1: {
-                        StringBuilder sb = new StringBuilder(ad);
-                        sb.insert(0, "00");
-                        stringBuilder.append(sb.toString());
-                        break;
-                    }
-                    case 2: {
-                        if (Short.parseShort(ad) > 0) {
+                if (ad.matches("[-+]?\\d+")) {
+                    switch (ad.length()) {
+                        case 1: {
                             StringBuilder sb = new StringBuilder(ad);
-                            sb.insert(0, "0");
-                            stringBuilder.append(sb);
-                            break;
-                        }
-                        else {
-                            StringBuilder sb = new StringBuilder(ad);
-                            sb.deleteCharAt(0);
                             sb.insert(0, "00");
                             stringBuilder.append(sb.toString());
                             break;
                         }
-                    }
-                    case 3: {
-                        if (Short.parseShort(ad) > 0) {
-                            if (Short.parseShort(ad) < 256) {
-                                stringBuilder.append(ad);
+                        case 2: {
+                            if (Short.parseShort(ad) > 0) {
+                                StringBuilder sb = new StringBuilder(ad);
+                                sb.insert(0, "0");
+                                stringBuilder.append(sb);
+                                break;
                             } else {
-                                System.out.println("Parts of ip must be less than 256! This part will equals \"255\".");
-                                stringBuilder.append("255");
+                                StringBuilder sb = new StringBuilder(ad);
+                                sb.deleteCharAt(0);
+                                sb.insert(0, "00");
+                                stringBuilder.append(sb.toString());
+                                break;
                             }
-                            break;
-                        } else {
-                            StringBuilder sb = new StringBuilder(ad);
-                            sb.deleteCharAt(0);
-                            sb.insert(0, "0");
-                            stringBuilder.append(sb);
-                            break;
+                        }
+                        case 3: {
+                            if (Short.parseShort(ad) > 0) {
+                                if (Short.parseShort(ad) < 256) {
+                                    stringBuilder.append(ad);
+                                } else {
+                                    System.out.println("Parts of ip must be less than 256! This part will equals \"255\".");
+                                    stringBuilder.append("255");
+                                }
+                                break;
+                            } else {
+                                StringBuilder sb = new StringBuilder(ad);
+                                sb.deleteCharAt(0);
+                                sb.insert(0, "0");
+                                stringBuilder.append(sb);
+                                break;
+                            }
+                        }
+                        default: {
+                            stringBuilder.append("255");
                         }
                     }
-                    default: {
-                        stringBuilder.append("255");
-                    }
+                }
+                else {
+                    System.out.println("Ip must contained ONLY digits and dots! This part will equals \"000\".");
+                    stringBuilder.append("000");
                 }
             }
             add = Long.parseLong(stringBuilder.toString());
-        } catch (NullPointerException e) {
-            add = 0;
-        }
+        }catch(NullPointerException e){
+                add = 0;
+            }
     }
 
     public void printAll() {

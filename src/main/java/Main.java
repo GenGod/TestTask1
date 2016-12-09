@@ -6,7 +6,17 @@ import java.util.Scanner;
 public class Main {
 
     public static long substraction (IpV4Address minued, IpV4Address subtrahend) {
-        return Math.abs(minued.getAdd() - subtrahend.getAdd());
+        try {
+            return Math.abs(minued.getAdd() - subtrahend.getAdd());
+        } catch (NullPointerException e) {
+            if (minued == null) {
+                return subtrahend.getAdd();
+            }
+            else if (subtrahend == null) {
+                return minued.getAdd();
+            }
+            else return 0;
+        }
     }
 
     public static void main(String[] args) {
