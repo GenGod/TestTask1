@@ -100,4 +100,24 @@ public class IpV4Address {
     public short[] getParts() {
         return parts;
     }
+
+
+    public boolean equals(IpV4Address obj) {
+        try {
+            return this.toString().equals(obj.toString());
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    public String toString() {
+        try {
+            return new String(Short.toString(this.getParts()[0]) + "." +
+                     Short.toString(this.getParts()[1]) + "." +
+                    Short.toString(this.getParts()[2]) + "." +
+                    Short.toString(this.getParts()[3]));
+        } catch (NullPointerException e) {
+            return "null";
+        }
+    }
 }
