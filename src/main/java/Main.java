@@ -24,61 +24,73 @@ public class Main {
             long end = substraction(first, second);
             long count = 0;
             if (end > 0) {
-                for (int i = second.getParts()[0]; i < first.getParts()[0] - 1; i++) {
-                    for (int j = 0; j < 256; j++) {
-                        for (int k = 0; k < 256; k++) {
-                            for (int l = 0; l < 256; l++) {
-                                System.out.println(i + "." + j + "." + k + "." + l);
-                                count++;
-                            }
-                        }
-                    }
+                while(second.getParts()[0] < first.getParts()[0]) {
+                    increment(second);
+                    System.out.println(second.getParts()[0] + "."
+                            + second.getParts()[1] + "."
+                            + second.getParts()[2] + "."
+                            + second.getParts()[3]);
+                    count++;
                 }
-                for (int i = 0; i < first.getParts()[1] - 1; i++) {
-                    for (int j = 0; j < 256; j++) {
-                        for (int k = 0; k < 256; k++) {
-                            System.out.println(first.getParts()[0] + "." + i + "." + j + "." + k);
-                            count++;
-                        }
-                    }
+                while(second.getParts()[1] < first.getParts()[1]) {
+                    increment(second);
+                    System.out.println(second.getParts()[0] + "."
+                            + second.getParts()[1] + "."
+                            + second.getParts()[2] + "."
+                            + second.getParts()[3]);
+                    count++;
                 }
-                for (int i = 0; i < first.getParts()[2] - 1; i++) {
-                    for (int j = 0; j < 256; j++) {
-                        System.out.println(first.getParts()[0] + "." + first.getParts()[1] + "." + i + "." + j);
-                        count++;
-                    }
+                while(second.getParts()[2] < first.getParts()[2]) {
+                    increment(second);
+                    if (first.getParts()[2] == second.getParts()[2])
+                        break;
+                    System.out.println(second.getParts()[0] + "."
+                            + second.getParts()[1] + "."
+                            + second.getParts()[2] + "."
+                            + second.getParts()[3]);
+                    count++;
                 }
-                for (int i = 0; i < first.getParts()[3]; i++) {
-                    System.out.println(first.getParts()[0] + "." + first.getParts()[1] + "." + first.getParts()[2] + "." + i);
+                while(second.getParts()[3] < (first.getParts()[3])) {
+                    increment(second);
+                    System.out.println(second.getParts()[0] + "."
+                            + second.getParts()[1] + "."
+                            + second.getParts()[2] + "."
+                            + second.getParts()[3]);
                     count++;
                 }
             } else {
-                for (int i = first.getParts()[0]; i < second.getParts()[0] - 1; i++) {
-                    for (int j = 0; j < 256; j++) {
-                        for (int k = 0; k < 256; k++) {
-                            for (int l = 0; l < 256; l++) {
-                                System.out.println(i + "." + j + "." + k + "." + l);
-                                count++;
-                            }
-                        }
-                    }
+                while(first.getParts()[0] < second.getParts()[0]) {
+                    increment(first);
+                    System.out.println(first.getParts()[0] + "."
+                            + first.getParts()[1] + "."
+                            + first.getParts()[2] + "."
+                            + first.getParts()[3]);
+                    count++;
                 }
-                for (int i = 0; i < second.getParts()[1] - 1; i++) {
-                    for (int j = 0; j < 256; j++) {
-                        for (int k = 0; k < 256; k++) {
-                            System.out.println(second.getParts()[0] + "." + i + "." + j + "." + k);
-                            count++;
-                        }
-                    }
+                while(first.getParts()[1] < second.getParts()[1]) {
+                    increment(first);
+                    System.out.println(first.getParts()[0] + "."
+                            + first.getParts()[1] + "."
+                            + first.getParts()[2] + "."
+                            + first.getParts()[3]);
+                    count++;
                 }
-                for (int i = 0; i < second.getParts()[2] - 1; i++) {
-                    for (int j = 0; j < 256; j++) {
-                        System.out.println(second.getParts()[0] + "." + second.getParts()[1] + "." + i + "." + j);
-                        count++;
-                    }
+                while(first.getParts()[2] < second.getParts()[2]) {
+                    increment(first);
+                    if (first.getParts()[2] == second.getParts()[2])
+                        break;
+                    System.out.println(first.getParts()[0] + "."
+                            + first.getParts()[1] + "."
+                            + first.getParts()[2] + "."
+                            + first.getParts()[3]);
+                    count++;
                 }
-                for (int i = 0; i < second.getParts()[3]; i++) {
-                    System.out.println(second.getParts()[0] + "." + second.getParts()[1] + "." + second.getParts()[2] + "." + i);
+                while(increment(first).getParts()[3] < (second.getParts()[3])) {
+                    increment(first);
+                    System.out.println(first.getParts()[0] + "."
+                            + first.getParts()[1] + "."
+                            + first.getParts()[2] + "."
+                            + first.getParts()[3]);
                     count++;
                 }
             }
@@ -92,6 +104,28 @@ public class Main {
             }
             else return printAddresses(new IpV4Address("0.0.0.0"), new IpV4Address("0.0.0.0"));
         }
+    }
+
+    public static IpV4Address increment(IpV4Address ad) {
+        if (ad.getParts()[3] < 255) {
+            ad.getParts()[3]++;
+        }
+        else if (ad.getParts()[2] < 255) {
+            ad.getParts()[2]++;
+            ad.getParts()[3] = 0;
+        }
+        else if (ad.getParts()[1] < 255) {
+            ad.getParts()[1]++;
+            ad.getParts()[2] = 0;
+            ad.getParts()[3] = 0;
+        }
+        else {
+            ad.getParts()[0] = 0;
+            ad.getParts()[1] = 0;
+            ad.getParts()[2] = 0;
+            ad.getParts()[3] = 0;
+        }
+        return ad;
     }
 
     public static void main(String[] args) {
